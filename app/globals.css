@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* =========================
+   PROFESSIONAL LIGHT THEME
+========================= */
+@theme {
+  /* =========================
+     BRAND (Muted Blue)
+  ========================= */
+  --color-brand: #2563eb;
+  --color-brand-hover: #1d4ed8;
+  --color-brand-soft: #dbeafe;
+
+  /* =========================
+     BACKGROUNDS
+  ========================= */
+  --color-bg: #f8fafc;           /* app background */
+  --color-bg-secondary: #ffffff; /* cards */
+  --color-bg-muted: #f1f5f9;     /* table rows / hover */
+
+  /* =========================
+     TEXT
+  ========================= */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748b;
+
+  /* =========================
+     BORDERS
+  ========================= */
+  --color-border: #e2e8f0;
+  --color-border-light: #cbd5f5;
+
+  /* =========================
+     STATUS
+  ========================= */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+  --color-info: #0284c7;
+
+  /* =========================
+     RADIUS
+  ========================= */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+html,
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+@layer base {
+  /* =========================
+     HEADINGS
+  ========================= */
+  h1 {
+    @apply text-4xl font-semibold leading-tight tracking-tight;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75em;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold leading-tight tracking-tight;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75em;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold leading-snug;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5em;
+  }
+
+  h4 {
+    @apply text-xl font-semibold leading-snug;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5em;
+  }
+
+  h5 {
+    @apply text-lg font-medium;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5em;
+  }
+
+  h6 {
+    @apply text-base font-medium;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5em;
+  }
+
+  /* =========================
+     PARAGRAPH
+  ========================= */
+  p {
+    @apply text-base leading-relaxed;
+    color: var(--color-text-secondary);
+    margin-bottom: 1em;
+  }
+}
