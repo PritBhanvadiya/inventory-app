@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <Sidebar />
-          <main className="w-full pr-4 pt-16">
+          <main className="w-full pr-10 pt-16">
             {children}
           </main>
         </ReduxProvider>

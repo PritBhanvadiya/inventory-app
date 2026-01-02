@@ -11,10 +11,10 @@ import SidebarItem from "./SidebarItem";
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 h-screen shrink-0 bg-bg-secondary border-r border-border p-4">
+    <aside className="w-64 h-auto min-h-screen shrink-0 bg-bg-secondary border-r border-border p-4">
       {/* Logo / App Name */}
       <div className="mb-8 px-4">
-        <h1 className="text-lg font-semibold text-text-primary">
+        <h1 className="text-2xl font-semibold text-text-primary mb-0.5">
           Inventory App
         </h1>
         <p className="text-xs text-text-muted">

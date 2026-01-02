@@ -14,9 +14,9 @@
   /* =========================
      BACKGROUNDS
   ========================= */
-  --color-bg: #f8fafc;           /* app background */
+  --color-bg: #f8fafc; /* app background */
   --color-bg-secondary: #ffffff; /* cards */
-  --color-bg-muted: #f1f5f9;     /* table rows / hover */
+  --color-bg-muted: #f1f5f9; /* table rows / hover */
 
   /* =========================
      TEXT
@@ -104,5 +104,139 @@ body {
     @apply text-base leading-relaxed;
     color: var(--color-text-secondary);
     margin-bottom: 1em;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-2.5
+           text-sm font-medium
+           transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+
+    background-color: var(--color-brand);
+    color: white;
+    border-radius: var(--radius-sm);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-brand-hover);
+  }
+
+  .btn-primary:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-brand-soft);
+  }
+
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+@layer components {
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-2.5
+           text-sm font-medium
+           border transition-colors duration-200;
+
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-bg-muted);
+  }
+}
+
+@layer components {
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2
+           text-sm font-medium
+           transition-colors;
+
+    color: var(--color-brand);
+    border-radius: var(--radius-sm);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-brand-soft);
+  }
+}
+
+@layer components {
+  /* =========================
+     INPUT BASE
+  ========================= */
+  .input {
+    @apply w-full px-4 py-2.5
+           text-sm
+           transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-offset-1;
+
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  /* =========================
+     INPUT STATES
+  ========================= */
+  .input:hover {
+    border-color: var(--color-border-light);
+  }
+
+  .input:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 2px var(--color-brand-soft);
+  }
+
+  .input:disabled {
+    background-color: var(--color-bg-muted);
+    color: var(--color-text-muted);
+    @apply cursor-not-allowed opacity-70;
+  }
+
+  /* =========================
+     INPUT SIZES
+  ========================= */
+  .input-sm {
+    @apply px-3 py-2 text-xs;
+    border-radius: var(--radius-xs);
+  }
+
+  .input-lg {
+    @apply px-5 py-3 text-base;
+    border-radius: var(--radius-md);
+  }
+
+  /* =========================
+     INPUT ERROR
+  ========================= */
+  .input-error {
+    border-color: var(--color-error);
+  }
+
+  .input-error:focus {
+    box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15);
+  }
+
+  /* =========================
+     INPUT SUCCESS
+  ========================= */
+  .input-success {
+    border-color: var(--color-success);
+  }
+
+  .input-success:focus {
+    box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.15);
   }
 }

@@ -59,23 +59,59 @@ export const productsSlice = createSlice({
         addProduct(state, action: PayloadAction<Product>) {
             state.items.push(action.payload)
         },
-        updateStock(state, action: PayloadAction<Product>) {
-            const { id, stock } = action.payload
-            const product = state.items.find((p) => p.id === id);
+        increaseStock(
+            state,
+            action: PayloadAction<{ id: string; amount: number }>
+        ) {
+            const product = state.items.find(
+                (p) => p.id === action.payload.id
+            );
+
             if (product) {
-                product.stock = stock;
+                product.stock += action.payload.amount;
+                product.updatedAt = Date.now();
             }
         },
-        updatePrice(state, action: PayloadAction<Product>) {
-            const { id, price } = action.payload;
-            const product = state.items.find((p) => p.id === id);
-            if (product) {
-                product.price = price;
+
+        decreaseStock(
+            state,
+            action: PayloadAction<{ id: string; amount: number }>
+        ) {
+            const product = state.items.find(
+                (p) => p.id === action.payload.id
+            );
+
+            if (product && product.stock > 0) {
+                product.stock -= action.payload.amount;
+                product.updatedAt = Date.now();
             }
-        }
+        },
+        updateStock(state, action: PayloadAction<Product>) {
+            const { id, stock } = action.payload;
+            const product = state.items.find(p => p.id === id);
+
+            if (product) {
+                product.stock = stock;
+                product.updatedAt = Date.now();
+            }
+        },
+
+        updatePrice(
+            state,
+            action: PayloadAction<{ id: string; price: number }>
+        ) {
+            const product = state.items.find(
+                (p) => p.id === action.payload.id
+            );
+
+            if (product) {
+                product.price = action.payload.price;
+                product.updatedAt = Date.now();
+            }
+        },
     },
 });
 
-export const { addProduct, updateStock, updatePrice } = productsSlice.actions;
+export const { addProduct, increaseStock, decreaseStock, updateStock, updatePrice } = productsSlice.actions;
 
 export default productsSlice.reducer;
