@@ -1,54 +1,24 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { Product } from "@/app/types/product";
 
 interface ProductState {
-    items: Product[]
+    items: Product[],
+    loading: boolean;
+    error: string | null;
 }
-const now = Date.now();
+
+export const fetchProduct  = createAsyncThunk<Product[]>(
+    'products',
+    async () => {
+        const res = await fetch('/api/products');
+        return res.json();
+    }
+)
 
 const initialState: ProductState = {
-    items: [
-        {
-            id: "p1",
-            name: "Wireless Mouse",
-            price: 799,
-            stock: 12,
-            category: "Electronics",
-            lowStockThreshold: 5,
-            createdAt: now,
-            updatedAt: now
-        },
-        {
-            id: "p2",
-            name: "Keyboard",
-            price: 1499,
-            stock: 3,
-            category: "Electronics",
-            lowStockThreshold: 5,
-            createdAt: now,
-            updatedAt: now
-        },
-        {
-            id: "p3",
-            name: "Notebook",
-            price: 99,
-            stock: 0,
-            category: "Stationery",
-            lowStockThreshold: 10,
-            createdAt: now,
-            updatedAt: now
-        },
-        {
-            id: "p4",
-            name: "Mouse",
-            price: 299,
-            stock: 3,
-            category: "Electronics",
-            lowStockThreshold: 7,
-            createdAt: now,
-            updatedAt: now
-        },
-    ],
+    items: [],
+    loading: false,
+    error: null,
 };
 
 
@@ -110,6 +80,21 @@ export const productsSlice = createSlice({
             }
         },
     },
+    extraReducers: (builder) => {
+    builder
+        .addCase(fetchProduct.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase(fetchProduct.fulfilled, (state, action) => {
+            state.loading = false;
+            state.items = action.payload;
+        })
+        .addCase(fetchProduct.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message || "Failed to fetch";
+        });
+}
 });
 
 export const { addProduct, increaseStock, decreaseStock, updateStock, updatePrice } = productsSlice.actions;

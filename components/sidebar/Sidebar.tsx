@@ -39,11 +39,11 @@ export default function Sidebar() {
           label="Analytics"
           icon={BarChart3}
         />
-        <SidebarItem
+        {/* <SidebarItem
           href="/settings"
           label="Settings"
           icon={Settings}
-        />
+        /> */}
         <SidebarItem
           href="/about"
           label="About Project"

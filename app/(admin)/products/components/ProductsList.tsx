@@ -1,13 +1,29 @@
 "use client";
 
-import { useSelector } from "react-redux";
-import type { RootState } from "@/app/store/store";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "@/app/store/store";
+import { fetchProduct } from "@/app/store/slices/productsSlice";
 import { ProductRow } from "./ProductRow";
 
 export default function ProductsList() {
-  const products = useSelector(
-    (state: RootState) => state.products.items
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { items: products, loading, error } = useSelector(
+    (state: RootState) => state.products
   );
+
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, [dispatch]);
+
+  if (loading) {
+    return <p className="p-4 text-sm">Loading products...</p>;
+  }
+
+  if (error) {
+    return <p className="p-4 text-sm text-red-500">{error}</p>;
+  }
 
   if (products.length === 0) {
     return (
