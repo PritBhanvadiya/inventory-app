@@ -15,7 +15,7 @@ export default function ActivityList({ activities }: ActivityListProps) {
   }
 
   return (
-    <div>
+    <div className="max-h-96 overflow-x-scroll">
       {activities.map((activity) => (
         <ActivityItem key={activity.id} activity={activity} />
       ))}

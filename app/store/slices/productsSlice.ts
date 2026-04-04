@@ -40,6 +40,8 @@ export const productsSlice = createSlice({
             if (product) {
                 product.stock += action.payload.amount;
                 product.updatedAt = Date.now();
+
+                localStorage.setItem("products", JSON.stringify(state.items));
             }
         },
 
@@ -54,6 +56,8 @@ export const productsSlice = createSlice({
             if (product && product.stock > 0) {
                 product.stock -= action.payload.amount;
                 product.updatedAt = Date.now();
+
+                localStorage.setItem("products", JSON.stringify(state.items));
             }
         },
         updateStock(state, action: PayloadAction<Product>) {
@@ -63,6 +67,8 @@ export const productsSlice = createSlice({
             if (product) {
                 product.stock = stock;
                 product.updatedAt = Date.now();
+
+                localStorage.setItem("products", JSON.stringify(state.items));
             }
         },
 
@@ -77,8 +83,14 @@ export const productsSlice = createSlice({
             if (product) {
                 product.price = action.payload.price;
                 product.updatedAt = Date.now();
+
+                localStorage.setItem("products", JSON.stringify(state.items));
             }
         },
+
+            setProducts(state, action: PayloadAction<Product[]>) {
+                state.items = action.payload;
+            }
     },
     extraReducers: (builder) => {
     builder
@@ -89,6 +101,8 @@ export const productsSlice = createSlice({
         .addCase(fetchProduct.fulfilled, (state, action) => {
             state.loading = false;
             state.items = action.payload;
+
+            localStorage.setItem("products", JSON.stringify(state.items));
         })
         .addCase(fetchProduct.rejected, (state, action) => {
             state.loading = false;
@@ -97,6 +111,6 @@ export const productsSlice = createSlice({
 }
 });
 
-export const { addProduct, increaseStock, decreaseStock, updateStock, updatePrice } = productsSlice.actions;
+export const { addProduct, increaseStock, decreaseStock, updateStock, updatePrice, setProducts } = productsSlice.actions;
 
 export default productsSlice.reducer;

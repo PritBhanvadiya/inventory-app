@@ -6,7 +6,9 @@ type ActivityState = {
 }
 
 const initialState: ActivityState = {
-    list: []
+    list: typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("activities") || "[]")
+        : []
 }
 
 const activitySlice = createSlice({
@@ -15,9 +17,16 @@ const activitySlice = createSlice({
     reducers: {
         addActivity(state, action: PayloadAction<Activity>){
             state.list.push(action.payload)
+
+            localStorage.setItem("activities", JSON.stringify(state.list));
+        },
+        clearActivity(state) {
+            state.list = [];
+
+            localStorage.removeItem("activities");
         }
     }
 })
 
-export const { addActivity } = activitySlice.actions
+export const { addActivity, clearActivity } = activitySlice.actions
 export default activitySlice.reducer

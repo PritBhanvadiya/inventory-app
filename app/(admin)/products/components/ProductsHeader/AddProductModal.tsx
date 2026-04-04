@@ -40,36 +40,50 @@ export default function AddProductModal({ onClose }: Props) {
 
   const isValid = Object.keys(errors).length === 0;
 
-  function handleSubmit() {
+  async function handleSubmit() {
     setSubmitted(true);
     if (!isValid) return;
 
-    const now = Date.now();
-
-    dispatch(
-      addProduct({
-        id: crypto.randomUUID(),
-        name: name.trim(),
-        category,
-        price: Number(price),
-        stock: Number(stock),
-        lowStockThreshold: Number(lowStockThreshold || 0),
-        createdAt: now,
-        updatedAt: now
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          category,
+          price: Number(price),
+          stock: Number(stock),
+          lowStockThreshold: Number(lowStockThreshold || 0)
+        })
       })
-    );
+      const data = await res.json();
 
-    dispatch(
-      addActivity({
-        id: crypto.randomUUID(),
-        type: "ADD_PRODUCT",
-        productName: name,
-        delta: Number(stock),
-        timestamp: now
-      })
-    );
+      if (!res.ok) {
+        alert(data.error || "Failed to create product");
+        return;
+      }
 
-    onClose();
+      dispatch(addProduct(data));
+
+      dispatch(
+        addActivity({
+          id: crypto.randomUUID(),
+          type: "ADD_PRODUCT",
+          productName: name,
+          delta: Number(stock),
+          timestamp: Date.now()
+        })
+      );
+
+      onClose();
+
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
+
   }
 
   return (
